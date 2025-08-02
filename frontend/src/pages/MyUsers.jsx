@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import profilePic from '../assets/profile.png'
-import { Input } from '../components'
+import { Input , Heading} from '../components'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux' 
 
 function MyUsers() {
 
@@ -118,13 +118,12 @@ function MyUsers() {
     >
 
       {/* Main coloured heading */}
-      <h1 className="mb-4 text-3xl h-18 flex justify-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-          Manage Your Staff
-        </span>
-      </h1>
+      <Heading
+        className='mb-4 text-3xl flex h-18 justify-center font-extrabold md:text-5xl lg:text-6xl'
+        >
+        Manage Your Staff
 
-
+      </Heading>
 
       <div className="flex flex-wrap justify-center gap-6 px-4 py-6">
         {users.length !== 0 &&

@@ -7,8 +7,8 @@ import {
 function BarGraph({ 
   products = [
     { categoryName: 'Product1', total: 10 },
-    { categoryName: 'Product2', total: 20 },
     { categoryName: 'Product3', total: 30 },
+    { categoryName: 'Product2', total: 20 },
     { categoryName: 'Product4', total: 45 },
   ]
 }) {

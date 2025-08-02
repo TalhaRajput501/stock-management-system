@@ -3,19 +3,20 @@ import { BarGraph } from '../components'
 // import { useSelector, useDispatch } from 'react-redux'
 import PieChartComponent from '../components/PieChart.jsx'
 import { Link } from 'react-router-dom'
+import Heading from '../components/Heading.jsx'
 // import { setIsMenu } from '../features/dashboardMenuSlice.js' 
 
 
 function ProductDashboardPage() {
 
   const [totalProducts, setTotalProducts] = useState({
-    inStock : 0,
+    inStock: 0,
     outOfStock: 0,
   })
   const businessId = JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
 
   // products coming from backend
-  const [productsByCategory, setProductsByCategory] = useState([]) 
+  const [productsByCategory, setProductsByCategory] = useState([])
 
 
   useEffect(() => {
@@ -35,21 +36,21 @@ function ProductDashboardPage() {
         }
         // setting products in state
         setProductsByCategory(data.productsByCategory)
-        
+
         // console.log(data)
 
         // Paragraph products counts
         data.stock.map((item) => {
-          if(item._id === 'available') { 
+          if (item._id === 'available') {
             setTotalProducts(prev => ({
               ...prev, inStock: item.count
             }))
-          }else if(item._id === 'empty'){ 
+          } else if (item._id === 'empty') {
             setTotalProducts(prev => ({
               ...prev, outOfStock: item.count
             }))
-          } 
-        })   
+          }
+        })
 
         // console.log('useeffect ends here')
       } catch (error) {
@@ -58,7 +59,7 @@ function ProductDashboardPage() {
     }
     getStats()
   }, [])
- 
+
 
   return (
     <div
@@ -66,11 +67,11 @@ function ProductDashboardPage() {
     >
 
       {/* Main coloured heading */}
-      <h1 className="mb-4 text-3xl flex h-18 justify-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-          Products Overview
-        </span>
-      </h1>
+      <Heading
+        className='mb-4 text-3xl flex  justify-center font-extrabold md:text-5xl lg:text-6xl'
+      >
+        Products Overview
+      </Heading>
 
       {/* Pie chart and guide para for showing product's insights  */}
       <div
@@ -119,9 +120,9 @@ function ProductDashboardPage() {
           className='w-[50%]  rounded-xl'
         >
           <h2 className="text-xl font-bold text-[#2b8bdf] mb-3 mt-5 text-center">In stock and out of stock items</h2>
-          
+
           <PieChartComponent products={totalProducts} />
-          
+
         </div>
       </div>
 
@@ -129,7 +130,7 @@ function ProductDashboardPage() {
       <div
         className='flex items-center w-full justify-center'
       >
-        <BarGraph products={productsByCategory.length !== 0 ? productsByCategory : undefined} />
+        <BarGraph products={productsByCategory.length !== 0 ? productsByCategory : undefined} /> 
       </div>
 
     </div>

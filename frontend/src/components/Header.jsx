@@ -96,7 +96,7 @@ function Header() {
             {
               <NavLink
                 to={'/'}
-                className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-blue-500 hover:rounded-full hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
+                className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300  hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
               >
                 Home
               </NavLink>
@@ -113,7 +113,7 @@ function Header() {
                     >
                       <NavLink
                         to={element.goto}
-                        className={({ isActive }) => `  block py-2 px-3  font-bold hover:bg-blue-500 hover:rounded-full hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
+                        className={({ isActive }) => `  block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
                       >
                         {element.name}
                       </NavLink>
@@ -127,7 +127,7 @@ function Header() {
               !isLoggedIn ?
                 <NavLink
                   to={'/account/login'}
-                  className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-blue-500 hover:rounded-full hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
+                  className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
                 >
                   Login
                 </NavLink>
@@ -136,7 +136,7 @@ function Header() {
                 <NavLink
                   to={''}
                   onClick={logout}
-                  className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-blue-500 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  text-white`}
+                  className={` block py-2 px-3  font-bold hover:bg-red-500 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  text-white`}
                 >
                   Logout
                 </NavLink>

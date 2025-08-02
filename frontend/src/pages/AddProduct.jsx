@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Input, BlurBgShape } from '../components'
+import { Table, Input, BlurBgShape, Heading, Button } from '../components'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProducts, setFilteredProducts } from '../features/productSlice'
@@ -103,7 +103,7 @@ function AddProduct() {
       <BlurBgShape />
     
       <div
-        className='pt-9  min-h-screen'
+        className='pt-4  min-h-screen'
       >
 
         <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition-all duration-500 ease-in-out
@@ -114,10 +114,10 @@ function AddProduct() {
 
         <form>
 
-          <h1
-            className='text-3xl font-bold text-blue-900 dark:text-white  text-center m-2'
+          <Heading
+            className='text-4xl justify-center font-bold text-blue-900 dark:text-white  text-center mb-5'
           >Add a Product
-          </h1>
+          </Heading>
 
           <div
             className='px-5'
@@ -212,12 +212,12 @@ function AddProduct() {
           {/* Add Product Button */}
           <div className="flex items-center justify-center mt-3">
 
-            <button
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            <Button
+              className=" focus:ring-4 focus:ring-blue-300 font-medium  rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:focus:ring-blue-800"
               onClick={handleSubmit(addProduct)}
             >
               Add Product
-            </button>
+            </Button>
           </div>
 
         </form>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BlurBgShape, Input, Table, } from '../components'
+import { BlurBgShape, Input, Table, Heading } from '../components'
 import { useForm } from 'react-hook-form'
 import { useSelector, useDispatch } from 'react-redux';
 import { setProducts, setFilteredProducts } from '../features/productSlice';
@@ -220,11 +220,11 @@ function MyStock() {
 
         {/* All Poroducts and Product Actions  */}
         <div>
-          <h1
-            className='text-3xl mb-5 pt-6 text-blue-900 dark:text-white font-bold text-center '
+          <Heading
+            className='text-4xl mb-5 pt-6 justify-center text-blue-900 dark:text-white font-bold text-center '
           >
             Find Products
-          </h1>
+          </Heading>
 
           {/* Find Product Input */}
           <div className="flex items-center max-w-lg mx-auto px-5">
@@ -243,10 +243,10 @@ function MyStock() {
             <div
               className='w-full  '
             >
-              <h1
-                className='text-3xl mt-1 mb-1 mx-auto text-blue-900 font-bold p-2 text-left w-[90%] dark:text-white '
+              <Heading
+                className='text-3xl mt-1 mb-1 mx-auto font-bold p-2 text-left w-[90%] '
               >Your stock
-              </h1>
+              </Heading>
             </div>
 
             {/* Table of All Stock */}
