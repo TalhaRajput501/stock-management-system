@@ -9,6 +9,16 @@ const router = Router()
 
 router.post('/admin', registerBusiness)
 router.post('/login', login)
+router.post('/logout', (req, res) => {
+  
+  res.clearCookie('accessToken', {
+    httpOnly: true, 
+    secure: true, 
+    sameSite: 'none'
+  })
+  res.json({message: 'Logout successfully'})
+})
+  
 // only admin can use these routes and these are dashboard routes
 router.post('/user/:id', protectedRoute, checkAdmin, registerUser)
 

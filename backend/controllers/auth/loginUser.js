@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 const login = async (req, res) => {
   const { name, password } = req.body
-  console.log(name, password)
+  // console.log('This is name":%s" and password:"%s"',name, password)
 
   try {
 
@@ -34,11 +34,13 @@ const login = async (req, res) => {
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: false, // change it in production 
-      sameSite: 'Lax',
+      secure: true, // will sent on only https (s)
+      sameSite:  'none', // allow cookie to be sent on different domains
       maxAge: 24 * 60 * 60 * 1000
     })
 
+    
+    // console.log(process.env.NODE_ENV)
     res.json({ status: true, message: 'Login successfull', user: {
       _id: user._id,
       role: user.role,

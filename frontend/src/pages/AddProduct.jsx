@@ -11,13 +11,13 @@ function AddProduct() {
   const { register, handleSubmit, setValue } = useForm()
   const [addedAlert, setAddedAlert] = useState(false)
   const dispatch = useDispatch()
-  const business = useSelector((state) => state.auth.userData.businessId)
+  const businessId = useSelector((state) => state.auth.userData.businessId)
+ 
 
   // Add Product to database
   const addProduct = async (data) => {
 
-    // console.log('clicked in addProduct')
-    console.log('This is what i give in form', data)
+    // console.log('clicked in addProduct', data) 
     setAddedAlert('')
     if (isNaN(data.price) || isNaN(data.quantity)) {
       alert('Price and Quantity should be in numbers')
@@ -29,7 +29,7 @@ function AddProduct() {
     const price = data.price
     const quantity = data.quantity
 
-    const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
+    // const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}`, {
         method: 'POST',
@@ -55,7 +55,7 @@ function AddProduct() {
 
       const product = await data.newProduct
       setCurrentProducts((prevProducts) => [{ ...product }, ...prevProducts])
-      // console.log('This is what saved in database', products)  
+      // console.log('This is what saved in database', product)  
 
       setValue('name', '')
       setValue('price', '')
@@ -65,8 +65,12 @@ function AddProduct() {
 
       // Now here make a db call for latest products and sync data 
       
-      const latestData = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}`)
+      const latestData = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}`, {
+        credentials: 'include'
+      })
+
       const result = await latestData.json()
+      // console.log(result)
       // update the state so that i can see data immediately in every component
       dispatch(setProducts(result))
       dispatch(setFilteredProducts(result))
@@ -112,7 +116,9 @@ function AddProduct() {
           Product Added Successfully!
         </div>
 
-        <form>
+        <form
+          onSubmit={handleSubmit(addProduct)}
+        >
 
           <Heading
             className='text-4xl justify-center font-bold text-blue-900 dark:text-white  text-center mb-5'
@@ -213,8 +219,8 @@ function AddProduct() {
           <div className="flex items-center justify-center mt-3">
 
             <Button
-              className=" focus:ring-4 focus:ring-blue-300 font-medium  rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:focus:ring-blue-800"
-              onClick={handleSubmit(addProduct)}
+              className=" focus:ring-4 focus:ring-blue-300 font-medium cursor-pointer rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:focus:ring-blue-800 "
+              type='submit'
             >
               Add Product
             </Button>

@@ -9,11 +9,10 @@ function MyUsers() {
   const [users, setUsers] = useState([])
   const [userForm, setUserForm] = useState(false)
   // this state is for execut useeffect again for instant ui update
+  const businessId = useSelector((state) => state.auth.userData.businessId)
   const [userDelete, setUserDelete] = useState(false)
-  const { handleSubmit, register, reset } = useForm()
-  const businessId = JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
-
-
+  const { handleSubmit, register, reset } = useForm() 
+ 
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -104,7 +103,8 @@ function MyUsers() {
 
     const data = await res.json()
     if(!res.ok){
-      alert(`${data.messsage}`)
+      alert(`thais ${data}`)
+      return
     }
 
     alert(`${data.message}`)
@@ -150,9 +150,7 @@ function MyUsers() {
                 </div>
                 {/* User Actions */}
                 <div className="flex gap-4">
-                  {/* <button className="px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm">
-                    Rename
-                  </button> */}
+                  
                   <button 
                     className="px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
                     onClick={() => deleteUser(user._id)}

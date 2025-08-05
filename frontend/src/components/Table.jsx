@@ -6,11 +6,11 @@ function Table({
   // stock,
   className = '',
   products = [],
-  actions,
+  actions = false,
+  salesAction = false,
   deleteProduct,
   updateProduct,
-  loading,
-  loadingMsg
+  loading, 
 }) {
   //min-h-[80vh] border-1 border-amber-400 
   return (
@@ -22,7 +22,7 @@ function Table({
           <thead className={`text-xs text-blue-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-blue-400 `}>
             <tr>
               <th scope="col" className="px-6 py-4 text-xl">
-                Product name
+                Product 
               </th>
               <th scope="col" className="px-6 py-4 text-xl">
                 CATEGORY
@@ -36,7 +36,18 @@ function Table({
               <th scope="col" className="px-6 py-4 text-xl">
                 Price
               </th>
+              {/* These actions are for delete and update Product */}
               {actions &&
+                <>
+                  <th scope="col" className=" py-4 text-xl text-center">
+                    Actions
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-xl">
+                  </th>
+                </>
+              }
+              {/* These actions are for sales like add to cart and remove from cart */}
+              {salesAction &&
                 <>
                   <th scope="col" className=" py-4 text-xl text-center">
                     Actions
@@ -67,7 +78,7 @@ function Table({
                   <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.quantity}</td>
                   <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.stock}</td>
                   <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">Rs{product.price}</td>
-                  {/* Only available in stock page */}
+                  {/* Only available in stock page update and delete button*/}
                   {
                     actions &&
                     <>
@@ -86,6 +97,30 @@ function Table({
                           onClick={() => deleteProduct(product._id)}
                         >
                           Delete
+                        </button>
+                      </td>
+                    </>
+                  }
+
+                  {/* available in sales page only and for add to cart and remove from cart*/}
+                  {
+                    salesAction &&
+                    <>
+                      <td className=" py-4">
+                        <button
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer"
+                          onClick={() => console.log('clicked delete')}
+                        >
+                          Add
+                        </button>
+                      </td>
+
+                      <td className=" py-4">
+                        <button
+                          className="text-white bg-blue-700  focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600  hover:bg-red-600 cursor-pointer focus:outline-none dark:focus:ring-blue-800"
+                          onClick={() => console.log('clicked delete')}
+                        >
+                          Remove
                         </button>
                       </td>
                     </>

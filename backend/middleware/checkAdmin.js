@@ -3,7 +3,7 @@
 const checkAdmin = (req, res, next) => {
 
   try {
-    console.log('checkAdmin midddlware running')
+    // console.log('checkAdmin midddlware running')
     let data = req.user
     if(data.user.role === 'admin') {  
       next()

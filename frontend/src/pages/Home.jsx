@@ -22,7 +22,7 @@ export default function Home() {
   const { ref: ref4, inView: inView4 } = useInView({ triggerOnce: true })
   const { ref: ref5, inView: inView5 } = useInView({ triggerOnce: true })
 
-  // This is for testimonials
+  // This is for testimonials to change dynamically
   const [activeTab, setActiveTab] = useState('client1')
   const [activeSideElement, setActiveSideElement] = useState(0)
   const renderedComponent = () => {
@@ -107,26 +107,25 @@ export default function Home() {
       </div>
 
 
-
       {/* Why Us Section  */}
       <section className="py-9 px-4 sm:px-8 bg-white dark:bg-gray-900">
-        <Heading className='sm:text-6xl pb- h-20 text-4xl justify-center font-extrabold md:text-5xl lg:text-6xl'>
+        <Heading className='sm:text-6xl pb- text-center h-20 text-4xl justify-center font-extrabold md:text-5xl lg:text-6xl'>
           Why Us
         </Heading>
 
-        {/* Text & Pictures  */}
+        {/* Text & Dashboard Pictures  */}
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           {/* Text Part of why us*/}
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-3xl text-center font-bold text-gray-900 dark:text-white mb-4">
               A Modern Dashboard Experience
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 text-lg mb-6">
+            <p className="text-gray-700 text-center dark:text-gray-300 text-lg mb-6">
               Our system empowers businesses with real-time inventory tracking,
               user roles (admin & employees), and insightful charts. It’s
               accessible, clean, and designed for growth.
             </p>
-            <ul className="space-y-2 ml-4 text-gray-700 dark:text-gray-300">
+            <ul className="space-y-2  ml-4 text-gray-700 dark:text-gray-300 mx-auto font-bold">
               <li className='list-disc'>Product Monitoring</li>
               <li className='list-disc'>Admin & Employee Access</li>
               <li className='list-disc'>Category-wise Analytics</li>
@@ -273,12 +272,12 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
               What Our Clients Say
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
+            <p className="text-gray-600 dark:text-gray-200 font-semibold mt-2">
               Real stories from businesses who use our system daily.
             </p>
           </div>
 
-          {/* Clients & Feedback */}
+          {/* Clients & Feedbacks */}
           <div
             className=' w-[90%] flex flex-col md:flex-row mx-auto p-5 text-gray-800 border-1 rounded-xl border-gray-950 dark:border-gray-600  dark:text-white'
           >
@@ -294,7 +293,7 @@ export default function Home() {
                     className={`list-none p-3 my-2  mx-1 cursor-pointer  hover:bg-gray-300  dark:hover:bg-gray-700  rounded-lg ${activeSideElement === index ? 'dark:bg-gray-700 bg-gray-300' : ''}`}
                     onClick={() => {
                       setActiveTab(`client${index + 1}`)
-                      setActiveSideElement(index)
+                      setActiveSideElement(index) 
                     }
                     }
                   >
@@ -306,7 +305,7 @@ export default function Home() {
                     </h1>
                     {/* Business name */}
                     <li
-                      className='text-gray-400'
+                      className='text-gray-600 font-semibold dark:text-gray-400 '
                     >
                       {each.business}
                     </li>
@@ -315,11 +314,11 @@ export default function Home() {
               }
             </div>
 
-            {/* This is the feedback from clients */}
+            {/* Feedbacks  */}
             <div
               className=' md:w-[70%] lg:p-3 '
             >
-              <svg class="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor" />
               </svg>
               {renderedComponent()}

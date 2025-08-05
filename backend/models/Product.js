@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true, 
+    index: true
   },
   stock: {
     type: String,
@@ -31,6 +32,8 @@ const productSchema = new mongoose.Schema({
   }
 
 })
+
+
 
 const Product = mongoose.model('Product', productSchema)
 

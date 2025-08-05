@@ -1,11 +1,14 @@
 
 const checkUser = (req, res, next) => {
-  console.log('checkUser middleware running')
+  // console.log('checkUser middleware running')
   try {
     
     const data = req.user
-    console.log(data)
-    if (data.user.role === 'employee' || data.user.role === 'admin') {
+    // console.log(data)
+
+    const allowedRoles = ['admin', 'employee']
+    
+    if(allowedRoles.includes(data.user.role)){
       next()
       return
     }else{

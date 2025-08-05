@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken'
 
 const protectedRoute = (req, res, next) => {
-  console.log('protected middlware running')
- const token = req.cookies.accessToken
+  // console.log('protected middlware running')
+  const token = req.cookies.accessToken
 
-  
 
   if (!token) return res.status(401).json({ message: 'Login first' })
 
@@ -14,12 +13,12 @@ const protectedRoute = (req, res, next) => {
 
     // console.log('this is decoded', data)
     // send this decoded data to next middleware
-    req.user = data 
+    req.user = data
     next()
 
 
   } catch (error) {
-    res.status(401).json({ message: 'Token invalid or expired' }) 
+    res.status(401).json({ message: 'Token invalid or expired' })
   }
 }
 

@@ -29,9 +29,6 @@ const renderCustomizedLabel = ({
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-
-
-
   return (
     <text
       x={x}
@@ -74,22 +71,23 @@ const renderNameLabel = ({
 };
 
 const PieChartComponent = ({
-  products = { inStock: 50, outOfStock: 50, message: 'This is dummy example' },
-
+  products = { inStock: 8, outOfStock: 2, message: 'This is dummy example' }
+  
 }) => { 
+  // console.log(products)
   // this is array which will serve in pie chart
   const data = [
     { name: 'In Stock', value: 0 },
     { name: 'Out of Stock', value: 0 },
-  ]; 
+  ];
 
   // so here make percentage and put in that array
-  const total = products.inStock + products.outOfStock 
-  data[0].value =   (products.inStock / total * 100) 
+  const total = products.inStock + products.outOfStock
+  data[0].value = (products.inStock / total * 100)
   data[1].value = (products.outOfStock / total * 100)
 
+  // console.log(total)
 
-  
 
   return (
     <div className="h-[400px] w-full p-4 bg-gray-400 dark:bg-gray-800 rounded-xl shadow-xl">

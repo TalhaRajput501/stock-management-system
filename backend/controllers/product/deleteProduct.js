@@ -3,8 +3,8 @@ import Product from "../../models/Product.js"
 const deleteProduct = async (req, res) => {
   try {
     console.log('delete controller running ')
-    const { id } = req.params 
-    const deletedProduct = await Product.findByIdAndDelete(id)
+    const { businessId } = req.params 
+    const deletedProduct = await Product.findByIdAndDelete(businessId)
     // console.log(deletedProduct)
     res.json({success: true, message: 'Product Deleted successfuly', deletedProduct})
     

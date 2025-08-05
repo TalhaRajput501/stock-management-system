@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import { BlurBgShape, Input } from '../components'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { setUserData } from '../features/authSlice.js'
-import { useDispatch } from 'react-redux'
+import { setUserData, setIsLoggedIn } from '../features/authSlice.js'
+import { useDispatch , useSelector} from 'react-redux'
 
 function Login() {
   const dispatch = useDispatch()
   const { handleSubmit, register, reset } = useForm()
   const [errorMsg, setErrorMsg] = useState('')
   const navigate = useNavigate()
+  const role = useSelector((state) => state.auth.userData.role)
 
   const handleLogin = async (formData) => {
-    console.log('this is what i give in form', formData)
+    // console.log('this is what i give in form', formData)
     try {
       setErrorMsg('')
       const name = formData.name.trim()
@@ -31,21 +32,29 @@ function Login() {
         })
       }
       )
+      const data = await res.json()
 
-      if (!res.ok) {
-        const errorData = await res.json()
-        setErrorMsg(errorData.message)
-        console.log('Actual error is :', errorData?.message)
+      if (!res.ok) { 
+        setErrorMsg(data.message)
+        console.log('Actual error is :', data.message)
         return
       }
-      const data = await res.json()
-      console.log('hogya',data.message)
+      // console.log('hogya',data.message)
       // now send user data to redux state
       // localStorage.setItem('userInfo', JSON.stringify(data.user)) 
+
       sessionStorage.setItem('userInfo', JSON.stringify(data.user))
-      dispatch(setUserData({...data.user})) 
-      // navigate to home if everything ok 
-      navigate('/')
+      dispatch(setUserData(data.user)) 
+      dispatch(setIsLoggedIn(true)) 
+
+      // navigate to relate route according to role if everything ok 
+      const role = data.user.role
+      // console.log('this is role before go to any route',role)
+      if(role === 'admin'){
+        navigate('/dashboard')
+      }else{
+        navigate('/my-stock')
+      }
     } catch (error) {
       console.log('this is error', error)
     }

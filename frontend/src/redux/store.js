@@ -5,6 +5,8 @@ import percentageReducer from '../features/stockPercentageSlice.js'
 import dashboardMenuReducer from '../features/dashboardMenuSlice.js'
 import authReducer from '../features/authSlice.js'
 import pageReducer from '../features/pageSlice.js'
+
+
 const store = configureStore({
   reducer: {
 

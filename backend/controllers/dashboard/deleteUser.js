@@ -1,9 +1,9 @@
 import User from "../../models/User.js"
 
 const deleteUser = async (req, res) => {
-  const {id} = req.params
+  const {userId} = req.params
   try {
-    await User.findByIdAndDelete(id)
+    await User.findByIdAndDelete(userId)
     res.json({message: 'User delete successfully'})
   } catch (error) {
     res.status(401).json({message: 'Server error :: deleteUser'})

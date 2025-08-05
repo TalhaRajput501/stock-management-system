@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import Login from './pages/Login.jsx'
 import ProtectedRoutes from './components/ProtectedRoutes.jsx'
 import AboutProject from './pages/AboutProject.jsx'
+import NewSale from './pages/NewSale.jsx'
 
 
 const router = createBrowserRouter(
@@ -33,6 +34,12 @@ const router = createBrowserRouter(
             path: 'add-product',
             element: <ProtectedRoutes allowedRoles={['admin', 'employee']}>
             <AddProduct />
+          </ProtectedRoutes>
+          },
+          {
+            path: '/new-sale',
+            element: <ProtectedRoutes allowedRoles={['admin', 'employee']}>
+            <NewSale />
           </ProtectedRoutes>
           },
           {

@@ -2,9 +2,9 @@ import Product from "../../models/Product.js";
 
 const updateProduct = async (req, res) => {
   try {
-    const { id } = req.params
+    const { businessId } = req.params
     const {name, stock, price, quantity, category} = req.body
-    const updatedProduct = await Product.findByIdAndUpdate(id, {
+    const updatedProduct = await Product.findByIdAndUpdate(businessId, {
       name,
       stock, 
       price, 

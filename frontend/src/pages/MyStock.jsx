@@ -20,8 +20,8 @@ function MyStock() {
   const loading = useSelector((state) => state.loading.loading)
 
   // getting businessId form state if avaiable otherwise from session storage
-  const business = useSelector((state => state.auth.userData.businessId))
-  const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
+  const businessId = useSelector((state) => state.auth.userData.businessId)
+  // const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
 
   // Pagination variable
   const page = useSelector((state) => state.page.page) 
@@ -244,7 +244,7 @@ function MyStock() {
               className='w-full  '
             >
               <Heading
-                className='text-3xl mt-1 mb-1 mx-auto font-bold p-2 text-left w-[90%] '
+                className='text-3xl   -1 mb-1 mx-auto font-bold p-2 text-left w-[90%] '
               >Your stock
               </Heading>
             </div>

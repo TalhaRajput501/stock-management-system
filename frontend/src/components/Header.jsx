@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Switch from './Switch.jsx'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import { setIsLoggedIn, setUserData } from '../features/authSlice.js'
 function Header() {
 
   const [isDarkTheme, setIsDarkTheme] = useState(false)
   // const dispatch = useDispatch()
   const navigate = useNavigate()
-  const loggedInInfo = useSelector((state) => state.auth.userData.isLoggedIn)
-  const isLoggedIn = loggedInInfo || JSON.parse(sessionStorage.getItem('userInfo'))?.isLoggedIn
-  // get role from redux if available otherwise take form localstorage
-  let userRole = useSelector((state) => state.auth.userData.role)
-  let role = userRole || JSON.parse(sessionStorage.getItem('userInfo'))?.role
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+
+  let role = useSelector((state) => state.auth.userData.role)
+
+  // let role = userRole || JSON.parse(sessionStorage.getItem('userInfo'))?.role
+
+  const dispatch = useDispatch()
 
   // Responsive Menu
   function showHideNav() {
@@ -29,8 +31,18 @@ function Header() {
     document.documentElement.classList.toggle('dark')
   }
 
-  const logout = () => {
+  // Logout Logic
+  const logout = async () => {
     sessionStorage.removeItem('userInfo')
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, {
+      method: 'POST',
+      credentials: 'include'
+    })
+
+    const data = await res.json()
+    if (!res.ok) return alert(data.message)
+    dispatch(setIsLoggedIn(false))  
+
   }
 
   // Navigation bar links
@@ -92,8 +104,18 @@ function Header() {
 
             {/* NavLinks */}
 
+            {/* Shop Button */}
+            {isLoggedIn && // will not visible after login
+              <NavLink
+                to={'/new-sale'}
+                className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300  hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
+              >
+                New Sale
+              </NavLink>
+            }
+
             {/* Home Button */}
-            {
+            {!isLoggedIn && // will not visible after login
               <NavLink
                 to={'/'}
                 className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300  hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
@@ -103,7 +125,7 @@ function Header() {
             }
 
 
-            {
+            {isLoggedIn &&
               navItems
                 .filter((item) => item.status && item.accessTo.includes(role))
                 .map((element) => (
@@ -123,36 +145,34 @@ function Header() {
             }
 
             {/* LogIn Button */}
-            {
-              !isLoggedIn ?
-                <NavLink
-                  to={'/account/login'}
-                  className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
-                >
-                  Login
-                </NavLink>
-                :
-                // LogOut Button
-                <NavLink
-                  to={''}
-                  onClick={logout}
-                  className={` block py-2 px-3  font-bold hover:bg-red-500 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  text-white`}
-                >
-                  Logout
-                </NavLink>
+            {!isLoggedIn ? // will not visible after login
+              <NavLink
+                to={'/account/login'}
+                className={({ isActive }) => ` block py-2 px-3  font-bold hover:bg-gradient-to-r to-emerald-500 from-sky-300 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  ${isActive ? 'text-blue-900 dark:text-blue-500' : 'text-white'}`}
+              >
+                Login
+              </NavLink>
+              :
+              // LogOut Button
+              <NavLink
+                to={''}  // will visible in logged in
+                onClick={logout}
+                className={` block py-2 px-3  font-bold hover:bg-red-500 hover:rounded-2xl hover:text-white rounded-sm md:bg-transparent  text-white`}
+              >
+                Logout
+              </NavLink>
             }
 
             {/* Get Started Button */}
-            {
+            {!isLoggedIn &&
               <li>
                 <NavLink
                   to={'/account/register'}
-                  className={`${role === 'admin' ? 'hidden' : 'block'} block py-2  px-3 text-center font-bold bg-blue-500 hover:bg-blue-600 hover:scale-125 duration-500 text-white rounded-sm`}
+                  className={` block py-2  px-3 text-center font-bold bg-blue-500 hover:bg-blue-600 hover:scale-125 duration-500 text-white rounded-sm`}
                 >
                   Get Started
                 </NavLink>
               </li>
-
             }
 
           </ul>

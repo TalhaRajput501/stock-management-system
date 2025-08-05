@@ -5,15 +5,20 @@ import PieChartComponent from '../components/PieChart.jsx'
 import { Link } from 'react-router-dom'
 import Heading from '../components/Heading.jsx'
 // import { setIsMenu } from '../features/dashboardMenuSlice.js' 
+import { useSelector } from 'react-redux'
 
 
 function ProductDashboardPage() {
+
+  
 
   const [totalProducts, setTotalProducts] = useState({
     inStock: 0,
     outOfStock: 0,
   })
-  const businessId = JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
+  const [rawStock, setRawStock] = useState([])
+  const businessId = useSelector((state) => state.auth.userData.businessId)
+  // const businessId = JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
 
   // products coming from backend
   const [productsByCategory, setProductsByCategory] = useState([])
@@ -34,12 +39,14 @@ function ProductDashboardPage() {
           alert(data.message)
           return
         }
+        // console.log(data)
         // setting products in state
         setProductsByCategory(data.productsByCategory)
 
         // console.log(data)
 
         // Paragraph products counts
+        setRawStock(data.stock)
         data.stock.map((item) => {
           if (item._id === 'available') {
             setTotalProducts(prev => ({
@@ -121,7 +128,7 @@ function ProductDashboardPage() {
         >
           <h2 className="text-xl font-bold text-[#2b8bdf] mb-3 mt-5 text-center">In stock and out of stock items</h2>
 
-          <PieChartComponent products={totalProducts} />
+          <PieChartComponent products={rawStock.length !== 0 ? totalProducts : undefined} />
 
         </div>
       </div>

@@ -8,22 +8,15 @@ function ProtectedRoutes({
   allowedRoles = [], 
 }) {
 
-  const navigate = useNavigate()
-  let userRole;
-  userRole = useSelector((state) => state.auth.userData.role)
-  if (!userRole) {
-    // state was removed on relaod so get data from localstorage which was stored after login
-    let user = JSON.parse(sessionStorage.getItem('userInfo'))
-    userRole = user?.role
-  } 
+  const navigate = useNavigate()  
+  let userRole = useSelector((state) => state.auth.userData.role)
 
 
   useEffect(() => {
     if (!allowedRoles.includes(userRole)) {
-
       navigate('/account/login')
     }
-    console.log(userRole)
+    // console.log(userRole)
   }, [])
 
 

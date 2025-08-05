@@ -13,7 +13,7 @@ const router = Router()
 // Dashboard Routes
 router.get('/stats/:id', protectedRoute, checkAdmin, stats)
 router.get('/users/:id', protectedRoute, checkAdmin, allUsers)
-router.delete('/user/:id', protectedRoute, checkAdmin, deleteUser)
+router.delete('/user/:userId', protectedRoute, checkAdmin, deleteUser)
 
 router.get('/info', (req, res) => {
   res.json({ message: 'ok ha g' })
