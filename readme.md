@@ -16,7 +16,7 @@ Two user roles — **Admin** and **Employee** — to maintain control and securi
 - **Admin:** full CRUD access + user monitoring  
 - **Employee:** add, update, and view data only  
 
-### 📈 Real-Time Dashboard
+### 📈 Dashboard
 See key insights at a glance — including stock levels, product categories, and out-of-stock alerts — visualized through charts and stats.
 
 ### 🧑‍🤝‍🧑 Multi-User Support
