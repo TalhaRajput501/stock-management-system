@@ -41,7 +41,7 @@ function Header() {
 
     const data = await res.json()
     if (!res.ok) return alert(data.message)
-    dispatch(setIsLoggedIn(false))  
+    dispatch(setIsLoggedIn(false))
 
   }
 
@@ -75,8 +75,15 @@ function Header() {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Home Logo and Toggle Theme Button */}
         <div className='flex items-center sm:gap-4 justify-center'>
-          <NavLink className="flex items-center space-x-3 rtl:space-x-reverse">
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-blue-900 dark:text-white">Stock Manager</span>
+          <NavLink
+            to={
+              isLoggedIn ? '/dashboard': '/'
+            }
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-2xl font-semibold whitespace-nowrap text-blue-900 dark:text-white">
+              Stock Manager
+            </span>
           </NavLink>
 
           {/* Toggle Theme Button - New Version */}

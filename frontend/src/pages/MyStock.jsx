@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { BlurBgShape, Input, Table, Heading } from '../components'
+import React, { useEffect, useRef, useState } from 'react'
+import { BlurBgShape, Input, Table, Heading, Alert } from '../components'
 import { useForm } from 'react-hook-form'
 import { useSelector, useDispatch } from 'react-redux';
 import { setProducts, setFilteredProducts } from '../features/productSlice';
@@ -7,10 +7,12 @@ import { nextPage, prevPage } from '../features/pageSlice';
 import { setLoading } from '../features/loadingSlice';
 
 function MyStock() {
-  
-  const dispatch = useDispatch()
-  const [showUpdateForm, setShowUpdateForm] = useState(false);  
 
+  const dispatch = useDispatch()
+
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [updateAlert, setUpdateAlert] = useState(false)
+  const [deleteAlert, setDeleteAlert] = useState(false)
   const [idForUpdate, setIdForUpdate] = useState('second');
   const { register, handleSubmit, setValue } = useForm();
 
@@ -19,12 +21,12 @@ function MyStock() {
   const filteredProducts = useSelector((state) => state.product.filteredProducts)
   const loading = useSelector((state) => state.loading.loading)
 
-  // getting businessId form state if avaiable otherwise from session storage
+
   const businessId = useSelector((state) => state.auth.userData.businessId)
-  // const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
+  const [inputVal, setInputVal] = useState('')
 
   // Pagination variable
-  const page = useSelector((state) => state.page.page) 
+  const page = useSelector((state) => state.page.page)
   const limit = useSelector((state) => state.page.limit)
 
   // rerun the useEffect after update product
@@ -44,40 +46,44 @@ function MyStock() {
         // setfilteredProducts(result)
         // update with redux
         dispatch(setProducts(result))
-        dispatch(setFilteredProducts(result))
-        dispatch(setLoading(false) )
-      } catch (error) {  
+        // dispatch(setFilteredProducts(result))
+        dispatch(setLoading(false))
+      } catch (error) {
         alert(`${error.message}`)
       }
     }
     getAllProducts()
   }, [page, runUseEffect])
 
-
   // Search a Product
-  const handleSearch = (e) => {
-    // console.log(products)
-    // console.log(filteredProducts)
-    const keyword = e.target.value.toLowerCase()
-    if (keyword === '') {
-      // setfilteredProducts(products)
-      // update with redux
-      dispatch(setFilteredProducts(products))
-    } else {
-      const filteredItems = products.filter((product) => product.name.toLowerCase().includes(keyword))
-      // setfilteredProducts(filteredItems) 
-      // updated with redux
-      dispatch(setFilteredProducts(filteredItems))
-      // console.log(filteredItems)
-    }
+  let timeOutRef = useRef(null)
+  const handleSearch = async (e) => {
+    let query = e.target.value
+    setInputVal(query)
+    if (query.trim().length === 0) return setRunUseEffect(prev => !prev)
+    clearTimeout(timeOutRef.current)
+
+    timeOutRef.current = setTimeout(async () => {
+
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pos/live-search/${businessId}?userQuery=${query}`, {
+        method: 'GET',
+        credentials: 'include'
+      })
+
+      const data = await res.json()
+      // if(!res.ok) return alert(data.message)
+      console.log(data.matchedProducts)
+      dispatch(setProducts(data.matchedProducts))
+    }, 300);
+
   }
 
 
   // Delete a Product from DB and UI
   const handleDelete = async (id) => {
     // console.log('clicked delete', id)
-    try { 
-      
+    try {
+
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${id}`, {
         method: "DELETE",
         credentials: 'include'
@@ -91,12 +97,17 @@ function MyStock() {
 
       const deletedProduct = products.filter((product) => product._id !== id)
       dispatch(setProducts(deletedProduct))
-      dispatch(setFilteredProducts(deletedProduct))
+      // dispatch(setFilteredProducts(deletedProduct))
       const data = await res.json()
       console.log(data.message)
-      alert(`${data.message}`)
+      // alert(`${data.message}`)
 
       // console.log('Product deleted') 
+      // adding and removing alert of product add
+      setDeleteAlert(true)
+      setTimeout(() => {
+        setDeleteAlert(false)
+      }, 1000);
     } catch (error) {
 
       alert(`Can't delete product ${error.message}`)
@@ -155,25 +166,25 @@ function MyStock() {
         })
       })
 
-      let data = await res.json() 
+      let data = await res.json()
 
-      if (!res.ok) {  
+      if (!res.ok) {
         alert(`${data.message}`)
         return
       }
 
-      const updatedProduct = await data.updatedProduct 
+      const updatedProduct = await data.updatedProduct
       // seperate produts that which we are not changing
       const restArr = products.filter((item) => item._id !== id)
-      
+
       products.map((product) => {
-        if(product._id === id){
+        if (product._id === id) {
           // now take the product we want to change and joint them with the rest products
-          setProducts([{...product, ...updatedProduct}, ...restArr])
-          setFilteredProducts([{...product, ...updatedProduct}, ...restArr])
-          
+          setProducts([{ ...product, ...updatedProduct }, ...restArr])
+          // setFilteredProducts([{...product, ...updatedProduct}, ...restArr])
+
           setRunUseEffect(prev => !prev)
-        } 
+        }
       })
 
       // Empty form after update clicked  
@@ -186,6 +197,13 @@ function MyStock() {
 
       setShowUpdateForm(false)
       document.body.style.overflow = 'auto'
+
+      // adding and removing alert of product add
+      setUpdateAlert(true)
+      setTimeout(() => {
+        setUpdateAlert(false)
+      }, 1000);
+
     } catch (error) {
 
       document.body.style.overflow = 'auto'
@@ -202,12 +220,12 @@ function MyStock() {
 
 
   // Pagination Logic 
-  const handleNextPage = async () => { 
-    dispatch(nextPage()) 
+  const handleNextPage = async () => {
+    dispatch(nextPage())
   }
 
-  const handlePrevPage = async () => { 
-    if(page > 1) dispatch(prevPage()) 
+  const handlePrevPage = async () => {
+    if (page > 1) dispatch(prevPage())
   }
 
   return (
@@ -226,6 +244,21 @@ function MyStock() {
             Find Products
           </Heading>
 
+          {/* Confirm Notification of Updation*/}
+        <Alert
+          className={`${updateAlert ? 'opacity-100 block translate-y-0' : 'opacity-0 hidden -translate-y-10'}`}
+          bgColor='bg-blue-500'
+          children='Product updated Successfuly!!'
+        /> 
+
+          {/* Confirm Notification of Deletion*/}
+        <Alert
+          className={`${deleteAlert ? 'opacity-100 block translate-y-0' : 'opacity-0 hidden -translate-y-10'}`}
+          bgColor='bg-blue-500'
+          children='Product deleted Successfuly!!'
+        /> 
+
+
           {/* Find Product Input */}
           <div className="flex items-center max-w-lg mx-auto px-5">
             <div className="relative w-full">
@@ -234,6 +267,8 @@ function MyStock() {
                 placeholder="Enter product name"
                 onChange={handleSearch}
                 required
+                autoFocus
+                value={inputVal}
               />
             </div>
           </div>
@@ -250,10 +285,10 @@ function MyStock() {
             </div>
 
             {/* Table of All Stock */}
-            
+
             <Table
-              className='pb-20'
-              products={filteredProducts}
+              className='pb-8'
+              products={products}
               actions={true}
               deleteProduct={handleDelete}  // delete action
               updateProduct={tableUpdateButton} // update action 
@@ -261,19 +296,35 @@ function MyStock() {
               loading={loading}
             />
           </div>
-            <button
-              className='bg-blue-600 hover:bg-blue-800 text-white cursor-pointer px-4 py-2 rounded fixed bottom-4 right-13'
-              onClick={handleNextPage}
-            >
-              Next
-            </button>
 
-            <button
-              className='bg-blue-600 hover:bg-blue-800 text-white cursor-pointer px-4 py-2 rounded fixed bottom-4 right-33'
-              onClick={handlePrevPage}
-            >
-              Previous
-            </button>
+ 
+
+          <div className="flex flex-col items-center pb-5"> 
+            <div className="inline-flex mt-2 xs:mt-0"> 
+              {/* Next Page Button */}
+              <button 
+                onClick={handlePrevPage}
+                className="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-700 rounded-s hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                
+                <svg className="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+                </svg>
+                Prev
+              </button>
+
+                {/* Previous Page Button */}
+              <button   
+                onClick={handleNextPage}
+                className="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-700 border-0 border-s border-gray-900 rounded-e hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Next
+                <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+              </button>
+            </div>
+          </div>
 
         </div>
 

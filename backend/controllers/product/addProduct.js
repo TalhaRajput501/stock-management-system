@@ -1,11 +1,11 @@
 import Product from "../../models/Product.js";
 
 const addProduct = async (req, res) => {
-  console.log('reached in backend')
-  const { businessId } = req.params
   try {
+    console.log('reached in backend')
+    const { businessId } = req.params
     const { name, stock, price, quantity, category } = req.body
-    if (!name || !stock || !price || !quantity || !category) return res.status(401).json({ message: 'Product information is incomplete' })
+    if (!name || !price || !quantity || !category) return res.status(401).json({ message: 'Product information is incomplete' })
 
     const newProduct = new Product({
       name,

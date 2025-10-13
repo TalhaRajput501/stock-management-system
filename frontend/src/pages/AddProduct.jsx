@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Input, BlurBgShape, Heading, Button } from '../components'
+import { Table, Input, BlurBgShape, Heading, Button, Alert } from '../components'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProducts, setFilteredProducts } from '../features/productSlice'
@@ -24,7 +24,7 @@ function AddProduct() {
       return
     }
     const name = data.name.trim();
-    const stock = data.stock.trim();
+    // const stock = data.stock.trim();
     const category = data.category.trim()
     const price = data.price
     const quantity = data.quantity
@@ -39,7 +39,7 @@ function AddProduct() {
         },
         body: JSON.stringify({
           name,
-          stock,
+          // stock,
           price,
           quantity,
           category
@@ -49,7 +49,7 @@ function AddProduct() {
       const data = await res.json()
 
       if (!res.ok) {
-        alert(`${data.message}`)
+        alert(`${data.message} bro`)
         return
       }
 
@@ -109,12 +109,12 @@ function AddProduct() {
       <div
         className='pt-4  min-h-screen'
       >
-
-        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition-all duration-500 ease-in-out
-            ${addedAlert ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}
-          `}>
-          Product Added Successfully!
-        </div>
+        {/* Confirm Notification */}
+        <Alert 
+          className={`${addedAlert ? 'opacity-100 block translate-y-0' : 'opacity-0 hidden -translate-y-10'}`}
+          bgColor='bg-blue-500'
+          children='Product added Successfuly!!'
+        /> 
 
         <form
           onSubmit={handleSubmit(addProduct)}
@@ -136,6 +136,7 @@ function AddProduct() {
                 <Input
                   className="bg-gray-400 border border-gray-300 outline-none text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-xl dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Product name"
+                  autoFocus
                   required
                   {...register('name', {
                     required: true
@@ -191,7 +192,7 @@ function AddProduct() {
             </div>
 
             {/* Product Stock availability */}
-            <div className="flex items-center max-w-lg mx-auto mt-2">
+            {/* <div className="flex items-center max-w-lg mx-auto mt-2">
               <div className="relative w-full">
                 <label
                   htmlFor="stockAvail"
@@ -211,7 +212,7 @@ function AddProduct() {
                 </select>
 
               </div>
-            </div>
+            </div> */}
 
           </div>
 

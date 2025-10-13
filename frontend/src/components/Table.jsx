@@ -10,6 +10,8 @@ function Table({
   salesAction = false,
   deleteProduct,
   updateProduct,
+  addToCart,
+  getSaleQuantity,
   loading, 
 }) {
   //min-h-[80vh] border-1 border-amber-400 
@@ -30,9 +32,9 @@ function Table({
               <th scope="col" className="px-6 py-4 text-xl">
                 QTY
               </th>
-              <th scope="col" className="px-6 py-4 text-xl">
+              {/* <th scope="col" className="px-6 py-4 text-xl">
                 STOCK
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-4 text-xl">
                 Price
               </th>
@@ -46,6 +48,7 @@ function Table({
                   </th>
                 </>
               }
+              
               {/* These actions are for sales like add to cart and remove from cart */}
               {salesAction &&
                 <>
@@ -76,8 +79,8 @@ function Table({
                   </th>
                   <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.category}</td>
                   <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.quantity}</td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.stock}</td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">Rs{product.price}</td>
+                  {/* <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">{product.stock}</td> */}
+                  <td className="px-6 py-4 text-gray-900 dark:text-gray-100 text-[17px]">Rs: {product.price}</td>
                   {/* Only available in stock page update and delete button*/}
                   {
                     actions &&
@@ -107,20 +110,23 @@ function Table({
                     salesAction &&
                     <>
                       <td className=" py-4">
-                        <button
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer"
-                          onClick={() => console.log('clicked delete')}
-                        >
-                          Add
-                        </button>
+                        <input
+                        type="number"
+                          className="text-white bg-gray-500  w-16 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 hover:w-20 transition-all duration-300 focus:outline-none dark:focus:ring-blue-800 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0 [type='number']:-moz-appearance-none"
+                          // onClick={() => getSaleQuantity()}
+                          onChange={(e) => getSaleQuantity(e.target.value, product._id)} 
+                          placeholder="qty"
+                          
+                          /> 
                       </td>
 
                       <td className=" py-4">
                         <button
-                          className="text-white bg-blue-700  focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600  hover:bg-red-600 cursor-pointer focus:outline-none dark:focus:ring-blue-800"
-                          onClick={() => console.log('clicked delete')}
+                          className="text-white bg-blue-700  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-700  hover:bg-blue-600 cursor-pointer "
+                          onClick={() => addToCart(product._id, product)}
+
                         >
-                          Remove
+                          Add
                         </button>
                       </td>
                     </>

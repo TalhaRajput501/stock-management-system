@@ -6,7 +6,7 @@ import protectedRoutes from "./ProtectedRoutes";
 import BlurBgShape from './BlurBgShape'
 import Heading from "./Heading";
 import Button from "./Button";
-
+import Alert from "./Alert";
 export {
   Input,
   Table,
@@ -15,5 +15,6 @@ export {
   protectedRoutes,
   BlurBgShape,
   Heading, 
-  Button
+  Button,
+  Alert
 };

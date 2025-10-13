@@ -69,7 +69,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="bg-white  dark:bg-gray-900">
+    <div className="bg-white pb-53 md:pb-4 dark:bg-gray-900">
 
 
       {/* Background shape graddient color */}
@@ -79,8 +79,10 @@ export default function Home() {
       <div className="mx-auto  max-w-full pt-32 pb-22 z-50">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
           <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 dark:text-gray-300 ring-1 ring-gray-900/10 dark:ring-white/10 hover:ring-gray-900/20 dark:hover:ring-white/20">
-            Talha our next round of funding.{' '}
-            <Link to={'/about'} className="font-semibold text-indigo-600 dark:text-indigo-400">
+            Our next round of funding.{' '}
+            <Link 
+              to={'/'} 
+              className="font-semibold text-indigo-600 dark:text-indigo-400">
               <span className="absolute inset-0" aria-hidden="true" />
               Read more <span aria-hidden="true">&rarr;</span>
             </Link>
@@ -108,7 +110,7 @@ export default function Home() {
 
 
       {/* Why Us Section  */}
-      <section className="py-9 px-4 sm:px-8 bg-white dark:bg-gray-900">
+      <section className="py-9  px-4 sm:px-8 bg-white dark:bg-gray-900">
         <Heading className='sm:text-6xl pb- text-center h-20 text-4xl justify-center font-extrabold md:text-5xl lg:text-6xl'>
           Why Us
         </Heading>

@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import Login from './pages/Login.jsx'
 import ProtectedRoutes from './components/ProtectedRoutes.jsx'
 import AboutProject from './pages/AboutProject.jsx'
+import NotFound from './pages/NotFound.jsx'
 import NewSale from './pages/NewSale.jsx'
 
 
@@ -68,6 +69,10 @@ const router = createBrowserRouter(
               { path: 'login', element: <Login /> },
             ]
           },
+          {
+            path: '*',
+            element: <NotFound />
+          }
         ]
     }
   ]

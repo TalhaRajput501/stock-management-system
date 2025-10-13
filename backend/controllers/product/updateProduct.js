@@ -11,7 +11,7 @@ const updateProduct = async (req, res) => {
       quantity,
       category
     }, {
-      new: true
+      new: true // by this it will give me the updated document
     })
 
     res.json({success: true, updatedProduct})

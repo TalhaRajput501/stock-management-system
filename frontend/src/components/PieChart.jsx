@@ -81,6 +81,7 @@ const PieChartComponent = ({
     { name: 'Out of Stock', value: 0 },
   ];
 
+
   // so here make percentage and put in that array
   const total = products.inStock + products.outOfStock
   data[0].value = (products.inStock / total * 100)
@@ -98,7 +99,7 @@ const PieChartComponent = ({
           {products.message}
         </p>
       }
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" >
         <PieChart>
           {/* ✅ Main Pie with percent label inside */}
           <Pie

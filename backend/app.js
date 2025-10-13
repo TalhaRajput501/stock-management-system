@@ -2,6 +2,7 @@ import express from "express";
 import inventoryRouter from './routes/inventoryRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import dashbaordRouter from './routes/dashboardRoutes.js'
+import posRouter from './routes/posRoutes.js'
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 
@@ -11,7 +12,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({
-  origin :'http://localhost:5173',
+  origin: 'http://localhost:5173',
   credentials: true
 }))
 
@@ -25,6 +26,9 @@ app.use('/api/users', userRouter)
 
 // Routes for Dashboard
 app.use('/api/dashboard', dashbaordRouter)
+
+// Routes for Point of Sale
+app.use('/api/pos', posRouter)
 
 app.get('/', (req, res) => {
   res.send('this is backend')

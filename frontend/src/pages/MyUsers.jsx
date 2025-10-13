@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import profilePic from '../assets/profile.png'
-import { Input , Heading} from '../components'
+import { Input, Heading, Alert } from '../components'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux' 
+import { useSelector } from 'react-redux'
 
 function MyUsers() {
 
@@ -11,8 +11,12 @@ function MyUsers() {
   // this state is for execut useeffect again for instant ui update
   const businessId = useSelector((state) => state.auth.userData.businessId)
   const [userDelete, setUserDelete] = useState(false)
-  const { handleSubmit, register, reset } = useForm() 
- 
+  const { handleSubmit, register, reset } = useForm()
+
+  // notifications
+  const [deleteAlert, setDeleteAlert] = useState(false)
+  const [addAlert, setAddedAlert] = useState(false)
+
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -25,8 +29,10 @@ function MyUsers() {
       if (!res.ok) {
         alert(data.message)
       }
-      setUsers(data.allUsers)
-      console.log('users data', data.allUsers)
+
+      // set all users to show on frontend  
+      let allUsers = data.allUsers
+      setUsers(allUsers)
 
     }
     getAllUsers()
@@ -48,7 +54,7 @@ function MyUsers() {
       const name = data.name
       const email = data.email
       const password = data.password
-      console.log(data)
+      // console.log(data)
 
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/user/${businessId}`, {
         method: "POST",
@@ -63,7 +69,7 @@ function MyUsers() {
         })
       })
 
-      console.log(res)
+      // console.log(res)
       const resData = await res.json()
 
       if (!res.ok) {
@@ -73,13 +79,20 @@ function MyUsers() {
       }
 
       // show success message
-      alert(`${resData.message}`)
+      // alert(`${resData.message}`)
+      console.log(resData.message)
 
       // Block scrolling when add User pannel is open
       document.body.style.overflow = 'auto'
       setUserForm(false)
       // now empty the whole form after every thing done and it is important when next time click on add user form should be empty
       reset()
+
+      // notification
+      setAddedAlert(true)
+      setTimeout(() => {
+        setAddedAlert(false)
+      }, 1000);
 
     } catch (error) {
       alert(`${error.message}`)
@@ -95,20 +108,27 @@ function MyUsers() {
   }
 
   // Delete a user
-  const deleteUser = async ( deleteId ) => {
+  const deleteUser = async (deleteId) => {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dashboard/user/${deleteId}`, {
-      credentials: 'include', 
+      credentials: 'include',
       method: 'DELETE'
     })
 
     const data = await res.json()
-    if(!res.ok){
+    if (!res.ok) {
       alert(`thais ${data}`)
       return
     }
 
-    alert(`${data.message}`)
+    // alert(`${data.message}`)
+    console.log(data.message)
     setUserDelete(prev => !prev)
+
+    // notification
+    setDeleteAlert(true)
+    setTimeout(() => {
+      setDeleteAlert(false)
+    }, 1000);
 
   }
 
@@ -120,17 +140,32 @@ function MyUsers() {
       {/* Main coloured heading */}
       <Heading
         className='mb-4 text-3xl flex h-18 justify-center font-extrabold md:text-5xl lg:text-6xl'
-        >
+      >
         Manage Your Staff
 
       </Heading>
 
+      {/* Confirm Notification of delete User*/}
+      <Alert
+        className={`${deleteAlert ? 'opacity-100 block translate-y-0' : 'opacity-0 hidden -translate-y-10'}`}
+        bgColor='bg-blue-500'
+        children='User deleted Successfuly!!'
+      />
+
+      {/* Confirm Notification of add User*/}
+      <Alert
+        className={`${addAlert ? 'opacity-100 block translate-y-0' : 'opacity-0 hidden -translate-y-10'}`}
+        bgColor='bg-blue-500'
+        children='User added Successfuly!!'
+      />
+
+
       <div className="flex flex-wrap justify-center gap-6 px-4 py-6">
-        {users.length !== 0 &&
+        {users.length !== 0 ?
           users.map((user, index) => (
             <div
               key={`${user.role}-${index}`}
-              className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded-2xl shadow-md hover:shadow-2xl hover:scale-105 transition-transform duration-300 w-full sm:w-[48%] lg:w-[40%] max-w-sm overflow-hidden"
+              className="bg-gray-300 dark:bg-gray-800 text-gray-800 dark:text-white rounded-2xl shadow-md hover:shadow-2xl hover:scale-105 transition-transform duration-300 w-full sm:w-[48%] lg:w-[40%] max-w-sm overflow-hidden"
             >
               <div className="p-4 flex flex-col items-center text-center space-y-4">
                 <img
@@ -140,18 +175,21 @@ function MyUsers() {
                 />
                 {/* User Details*/}
                 <div>
-                  <h1 className="text-xl font-semibold">{user.name}</h1>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    <span className='font-bold text-gray-600 dark:text-gray-200'>Role:</span> {user.role}
-                  </p> 
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    <span className='font-bold text-gray-600 dark:text-gray-200'>E-mail:</span> {user.email}
-                  </p> 
+                  <h1 className="text-2xl font-semibold">{user.name}</h1>
+                  <p className="text-sm text-gray-900 dark:text-gray-300">
+                    <span className='font-bold text-gray-600 dark:text-gray-200 text-lg'>Role:</span> {user.role}
+                  </p>
+
+
+
+                  <p className="text-sm text-gray-900 dark:text-gray-300">
+                    <span className='font-bold text-gray-600 dark:text-gray-200 text-lg'>E-mail:</span> {user.email}
+                  </p>
                 </div>
                 {/* User Actions */}
                 <div className="flex gap-4">
-                  
-                  <button 
+
+                  <button
                     className="px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
                     onClick={() => deleteUser(user._id)}
                   >
@@ -160,7 +198,17 @@ function MyUsers() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+          :
+            <div className="text-center p-8 rounded-2xl shadow-md bg-gray-200 dark:bg-gray-800">
+              <h1 className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                Looks empty… Add your first user to get started
+              </h1>
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
+                Start by creating the first user to set up your system.
+              </p>
+            </div>
+        }
       </div>
 
 

@@ -4,7 +4,7 @@ const page = createSlice({
   name: 'page', 
   initialState: {
     page: 1, 
-    limit: 3
+    limit: 10
   },
   reducers: {
     nextPage: (state) => {

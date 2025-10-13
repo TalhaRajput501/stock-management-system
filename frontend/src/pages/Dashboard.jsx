@@ -37,8 +37,10 @@ function Dashboard() {
         {/* Sidebar */}
         <div
           className={`fixed top-18 -left-7 h-full px-3 z-40 transition-all duration-300
-              ${isMenu ? 'w-[240px] left-0' : 'w-0  overflow-hidden'}
-                border-r border-gray-400 dark:border-gray-700 bg-transparent`}
+              ${isMenu ? 'md:w-[240px] w-[80%] left-0' : 'w-0  overflow-hidden'}
+                md:border-r border-gray-400 dark:border-gray-700 md:bg-transparent 
+                dark:bg-gray-900/95 bg-gray-300/95
+                `}
         >
 
           {/* ✕ Close Icon - Only visible when sidebar is open */}
@@ -57,19 +59,19 @@ function Dashboard() {
           <div className="w-full mt-22">
 
             <div>
-              <NavLink to="products" className={({ isActive }) => `block px-4 py-3 text-gray-900 dark:text-gray-400  font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? 'dark:text-white' : 'text-gray-400'}`}>
+              <NavLink to="products" className={({ isActive }) => `block px-4 py-3     font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? ' text-blue-500 ' : 'dark:text-gray-200 text-gray-800'}`}>
                 Products Overview
               </NavLink>
             </div>
 
             <div>
-              <NavLink to="users" className={({ isActive }) => `block px-4 py-3 mt-2 text-gray-900 dark:text-gray-400  font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? 'dark:text-white' : 'text-gray-400'}`}>
+              <NavLink to="users" className={({ isActive }) => `block px-4 py-3     font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? ' text-blue-500 ' : 'dark:text-gray-200 text-gray-800'}`}>
                 My Users
               </NavLink>
             </div>
 
             <div>
-              <NavLink to="developer" className={({ isActive }) => `block px-4 py-3 mt-2 text-gray-900 dark:text-gray-400  font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? 'dark:text-white' : 'text-gray-400'}`}>
+              <NavLink to="developer" className={({ isActive }) => `block px-4 py-3     font-bold hover:text-white hover:bg-gray-400 dark:hover:bg-gray-700  rounded-lg ${isActive ? ' text-blue-500 ' : 'dark:text-gray-200 text-gray-800'}`}>
                 Developer Point
               </NavLink>
             </div>
@@ -78,7 +80,7 @@ function Dashboard() {
 
         {/* Content area */}
         <div
-          className={`ml-0 ${isMenu ? 'ml-[240px]' : 'ml-0'}   transition-all duration-300 w-full p-7 overflow-y-auto  `}
+          className={`ml-0 ${isMenu ? '  md:ml-[240px]   ' : 'ml-0'}   transition-all duration-300 w-full p-7 overflow-y-auto  `}
         >
           <Outlet /> 
         </div>

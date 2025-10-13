@@ -8,6 +8,9 @@ import { setIsLoggedIn, setUserData } from './features/authSlice'
 
 function App() {
  
+  
+
+
   const dispatch = useDispatch()
   const [authCheck, setAuthCheck] = useState(false)
 

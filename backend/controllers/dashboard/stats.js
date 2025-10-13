@@ -6,7 +6,7 @@ const stats = async (req, res) => {
   try {
 
     // TODO: wrap all aggregate in await promis.all
-    console.log(id)
+    // console.log(id)
     // It will  give me the total worth of my business
     const totalWorth = await Product.aggregate([
       { $match: { businessId: new mongoose.Types.ObjectId(id) } },
@@ -22,11 +22,35 @@ const stats = async (req, res) => {
     // This is will return in stock and out of stock items 
     const stock = await Product.aggregate([
       { $match: { businessId: new mongoose.Types.ObjectId(id) } },
-      { $match: { stock: { $in: ['available', 'empty'] } } },
-      { $group: { _id: '$stock', count: { $sum: 1 } } }
+      // { $match: { stock: { $in: ['available', 'empty'] } } }, 
+      // { $group: { _id: '$stock', count: { $sum: 1 } } }
+      {
+        $group:
+        {
+          _id: null,  
+          inStock: {
+            $sum: {
+              $cond: [
+                {
+                  $gt: ['$quantity', 0]
+                }, 1, 0
+              ]
+            }
+          },
+          outOfStock: {
+            $sum: {
+              $cond: [
+                {
+                  $eq: ["$quantity", 0]
+                }, 1, 0
+              ]
+            }
+          }
+        }
+      }
     ])
 
-    // console.log(stock)
+    console.log(stock) 
 
     res.json({
       totalWorth,

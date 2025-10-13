@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 
 function ProductDashboardPage() {
 
-  
+
 
   const [totalProducts, setTotalProducts] = useState({
     inStock: 0,
@@ -22,7 +22,7 @@ function ProductDashboardPage() {
 
   // products coming from backend
   const [productsByCategory, setProductsByCategory] = useState([])
-
+  const [totalWorth, setTotalWorth] = useState({ total: 0 })
 
   useEffect(() => {
     const getStats = async () => {
@@ -42,21 +42,14 @@ function ProductDashboardPage() {
         // console.log(data)
         // setting products in state
         setProductsByCategory(data.productsByCategory)
-
+        // show the total worth of the store
+        setTotalWorth(...data.totalWorth)
         // console.log(data)
 
         // Paragraph products counts
-        setRawStock(data.stock)
+        setRawStock(data.stock) 
         data.stock.map((item) => {
-          if (item._id === 'available') {
-            setTotalProducts(prev => ({
-              ...prev, inStock: item.count
-            }))
-          } else if (item._id === 'empty') {
-            setTotalProducts(prev => ({
-              ...prev, outOfStock: item.count
-            }))
-          }
+          setTotalProducts({inStock: item.inStock, outOfStock: item.outOfStock})
         })
 
         // console.log('useeffect ends here')
@@ -82,13 +75,25 @@ function ProductDashboardPage() {
 
       {/* Pie chart and guide para for showing product's insights  */}
       <div
-        className='mx-auto flex justify-between'
+        className='mx-auto flex md:flex-row flex-col justify-between'
       >
 
         {/* Pie chart explain paragrph */}
         <div
-          className='w-[50%]  px-1 pt-9 rounded-xl '
+          className='md:w-[50%]  w-full px-1 pt-9 rounded-xl '
         >
+
+
+          {/* Store in Numberss */}
+          <h2 className="text-3xl font-bold mb-3 md:pl-9  text-[#1170c4] text-left ">Your store’s worth</h2>
+          <div className="text-center w-[90%] mx-auto p-8 rounded-2xl shadow-md bg-gray-200 dark:bg-gray-800">
+            <h1 className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200">
+              {totalWorth.total}
+            </h1>
+          </div>
+
+
+          {/* Summary of the pie chart  */}
           <h2 className="text-3xl font-bold mb-3 text-[#1170c4] text-center ">Summary</h2>
           <p className="   text-gray-950  mt-4 px-7 text-justify text-lg font-medium text-pretty dark:text-gray-200 sm:text-xl/8">
             This pie chart visually represents the current stock status of items in your system.
@@ -124,7 +129,7 @@ function ProductDashboardPage() {
 
         {/* Pie chart  */}
         <div
-          className='w-[50%]  rounded-xl'
+          className='md:w-[50%] w-full  rounded-xl'
         >
           <h2 className="text-xl font-bold text-[#2b8bdf] mb-3 mt-5 text-center">In stock and out of stock items</h2>
 
@@ -135,9 +140,9 @@ function ProductDashboardPage() {
 
       {/* Bar Graph for showing product quantity by category */}
       <div
-        className='flex items-center w-full justify-center'
+        className='flex items-center  w-full justify-center '
       >
-        <BarGraph products={productsByCategory.length !== 0 ? productsByCategory : undefined} /> 
+        <BarGraph products={productsByCategory.length !== 0 ? productsByCategory : undefined} />
       </div>
 
     </div>
