@@ -91,6 +91,6 @@ This project helped me deepen my understanding of:
 
 ## 👨‍💻 Author
 
-**Developed by [Talha Rajput](https://github.com/TalhaRajput501)**  
+**Developed by [Muhammad Talha](https://github.com/TalhaRajput501)**  
 
 💬 *A passionate MERN Stack Developer focused on solving real business problems through clean, modern web apps.*
