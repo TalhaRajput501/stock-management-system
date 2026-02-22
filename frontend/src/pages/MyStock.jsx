@@ -72,7 +72,7 @@ function MyStock() {
 
       const data = await res.json()
       // if(!res.ok) return alert(data.message)
-      console.log(data.matchedProducts)
+      // console.log(data.matchedProducts)
       dispatch(setProducts(data.matchedProducts))
     }, 300);
 

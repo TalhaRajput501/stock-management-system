@@ -108,7 +108,7 @@ export default function Home() {
         </div>
       </div>
 
-
+    <hr className='   text-blue-900 dark:text-gray-600 ' />
       {/* Why Us Section  */}
       <section className="py-9  px-4 sm:px-8 bg-white dark:bg-gray-900">
         <Heading className='sm:text-6xl pb- text-center h-20 text-4xl justify-center font-extrabold md:text-5xl lg:text-6xl'>
@@ -266,7 +266,7 @@ export default function Home() {
 
         </div>
 
-
+        <hr className='   text-blue-900 dark:text-gray-600  ' />
         {/* Testimonials Starts here */}
         <div>
           {/* Heading of what client say */}
@@ -278,6 +278,7 @@ export default function Home() {
               Real stories from businesses who use our system daily.
             </p>
           </div>
+
 
           {/* Clients & Feedbacks */}
           <div
