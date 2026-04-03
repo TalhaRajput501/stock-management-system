@@ -30,7 +30,7 @@ function NewSale() {
     timeOutRef.current = setTimeout(async () => {
       // console.log(query)
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pos/live-search/${businessId}/?userQuery=${query}`, {
+      const res = await fetch(`/api/pos/live-search/${businessId}/?userQuery=${query}`, {
         credentials: 'include'
       })
 
@@ -126,7 +126,7 @@ function NewSale() {
 
     // console.log(soldProducts)
 
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pos/sale/${businessId}`, {
+    const res = await fetch(`/api/pos/sale/${businessId}`, {
       method: 'POST',
       credentials: 'include',
       headers: {

@@ -34,7 +34,7 @@ function Header() {
   // Logout Logic
   const logout = async () => {
     sessionStorage.removeItem('userInfo')
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, {
+    const res = await fetch(`/api/users/logout`, {
       method: 'POST',
       credentials: 'include'
     })

@@ -15,7 +15,7 @@ function RegisterBusiness() {
     const location = formData.location
 
     // Request for a business setup
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/admin`, {
+    const res = await fetch(`/api/users/admin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

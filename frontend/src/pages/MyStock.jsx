@@ -38,7 +38,7 @@ function MyStock() {
       // console.log('effect')
       try {
         dispatch(setLoading(true))
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}?limit=${limit}&page=${page}`, {
+        const res = await fetch(`/api/inventory/products/${businessId}?limit=${limit}&page=${page}`, {
           credentials: 'include'
         })
         const result = await res.json()
@@ -65,7 +65,7 @@ function MyStock() {
 
     timeOutRef.current = setTimeout(async () => {
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pos/live-search/${businessId}?userQuery=${query}`, {
+      const res = await fetch(`/api/pos/live-search/${businessId}?userQuery=${query}`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -84,7 +84,7 @@ function MyStock() {
     // console.log('clicked delete', id)
     try {
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${id}`, {
+      const res = await fetch(`/api/inventory/products/${id}`, {
         method: "DELETE",
         credentials: 'include'
       })
@@ -151,7 +151,7 @@ function MyStock() {
     // console.log('This is what i get in data', data)
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${id}`, {
+      const res = await fetch(`/api/inventory/products/${id}`, {
         method: "PATCH",
         headers: {
           'Content-Type': "application/json",

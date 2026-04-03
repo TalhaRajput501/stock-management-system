@@ -20,7 +20,7 @@ function Login() {
       const password = formData.password
 
       // login for admin and user both
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
+      const res = await fetch(`/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

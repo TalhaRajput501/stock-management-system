@@ -1,7 +1,7 @@
 {
   "name": "inventory-management-system",
   "version": "1.0.0",
-  "description": "play ground where i play with database",
+  "description": "Inventory Management System Backend",
   "main": "index.js",
   "type": "module",
   "scripts": {

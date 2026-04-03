@@ -11,8 +11,15 @@ import cookieParser from "cookie-parser";
 const app = express()
 
 app.use(express.json())
+const allwedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:8080',
+  'https://inventoryflow.azurewebsites.net' 
+]
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: allwedOrigins,
   credentials: true
 }))
 
@@ -31,7 +38,7 @@ app.use('/api/dashboard', dashbaordRouter)
 app.use('/api/pos', posRouter)
 
 app.get('/', (req, res) => {
-  res.send('this is backend')
+  res.send('Welcome to the Inventory Management System API')
 })
 
 export default app

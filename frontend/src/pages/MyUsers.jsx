@@ -21,7 +21,7 @@ function MyUsers() {
   useEffect(() => {
     const getAllUsers = async () => {
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dashboard/users/${businessId}`, {
+      const res = await fetch(`/api/dashboard/users/${businessId}`, {
         credentials: 'include'
       })
 
@@ -56,7 +56,7 @@ function MyUsers() {
       const password = data.password
       // console.log(data)
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/user/${businessId}`, {
+      const res = await fetch(`/api/users/user/${businessId}`, {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -109,7 +109,7 @@ function MyUsers() {
 
   // Delete a user
   const deleteUser = async (deleteId) => {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dashboard/user/${deleteId}`, {
+    const res = await fetch(`/api/dashboard/user/${deleteId}`, {
       credentials: 'include',
       method: 'DELETE'
     })

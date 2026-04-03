@@ -31,7 +31,7 @@ function AddProduct() {
 
     // const businessId = business || JSON.parse(sessionStorage.getItem('userInfo'))?.businessId
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}`, {
+      const res = await fetch(`/api/inventory/products/${businessId}`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -65,7 +65,7 @@ function AddProduct() {
 
       // Now here make a db call for latest products and sync data 
       
-      const latestData = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/inventory/products/${businessId}`, {
+      const latestData = await fetch(`/api/inventory/products/${businessId}`, {
         credentials: 'include'
       })
 

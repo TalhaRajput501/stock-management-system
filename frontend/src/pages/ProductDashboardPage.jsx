@@ -30,7 +30,7 @@ function ProductDashboardPage() {
 
       try {
 
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dashboard/stats/${businessId}`, {
+        const res = await fetch(`/api/dashboard/stats/${businessId}`, {
           credentials: 'include'
         })
 

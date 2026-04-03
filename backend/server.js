@@ -1,7 +1,7 @@
 dotenv.config()
 // import all secret variables first 
 import dotenv from 'dotenv'
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 
 
 
@@ -13,7 +13,7 @@ const startServer = async () => {
   try {
     connection().then(() => {
       app.listen(PORT, () => {
-        console.log("⚙️ server is running ")
+        console.log("⚙️ Server is running ")
       })
     }).catch((error) => {
       console.log(error)
