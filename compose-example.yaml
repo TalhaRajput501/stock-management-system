@@ -1,0 +1,15 @@
+
+services: 
+  frontend:
+    build: ./frontend # this will build the image from Dockerfile in frontend folder
+    image: talhaashfaq4/inventoryflow:frontend-latest # this will give the custom name to image in this case this one "talhaashfaq4/inventoryflow:frontend-latest"
+    env_file: ./frontend/.env
+    ports: 
+      - 8080:80
+  backend:
+    build: ./backend
+    image: talhaashfaq4/inventoryflow:backend-latest
+    env_file: ./backend/.env
+    ports:
+      - 3000:3000
+
