@@ -1,7 +1,9 @@
 
 services: 
   frontend:
-    build: ./frontend 
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.local
     image: talhaashfaq4/inventoryflow:frontend-latest
     env_file: ./frontend/.env
     ports: 
