@@ -35,7 +35,7 @@ jobs:
       - name: Building & Pushing Backend
         run: |
           docker build -t $BACKEND_IMAGE ./backend
-          docker push -t $BACKEND_IMAGE 
+          docker push $BACKEND_IMAGE 
 
   deploy-frontend:
     runs-on: ubuntu-latest
