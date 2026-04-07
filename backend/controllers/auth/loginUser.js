@@ -50,8 +50,8 @@ const login = async (req, res) => {
 
 
   } catch (error) {
-    res.status(401).json({ message: 'Server error during login ' })
-    // res.status(400).json({ message: error.message }) 
+    console.error('Login error:', error)
+    res.status(401).json({ message: 'Server error during login ', error: error.message })
   }
 
 }
