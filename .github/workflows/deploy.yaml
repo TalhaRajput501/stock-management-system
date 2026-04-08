@@ -8,9 +8,8 @@ on:
   workflow_dispatch:
 
 env: 
-  FRONTEND_IMAGE: talhaashfaq4/inventoryflow:frontend-${{ github.sha }}
-  BACKEND_IMAGE: talhaashfaq4/inventoryflow:backend-${{ github.sha }}
-
+  FRONTEND_IMAGE: docker.io/talhaashfaq4/inventoryflow:frontend-${{ github.sha }}
+  BACKEND_IMAGE: docker.io/talhaashfaq4/inventoryflow:backend-${{ github.sha }}
 
 jobs: 
 
